@@ -206,105 +206,100 @@ export default function Home() {
     }
   };
 
-  import { EmptyState } from "@/components/EmptyState";
 
-  // ... (imports remain the same)
 
-  export default function Home() {
-    // ... (existing state and logic)
+  const hasMessages = currentChat && currentChat.messages.length > 0;
 
-    const hasMessages = currentChat && currentChat.messages.length > 0;
+  return (
+    <div className="flex h-screen bg-[#000000] text-[#fafafa] overflow-hidden">
+      {/* Sidebar */}
+      <Sidebar
+        chats={chats}
+        currentChatId={currentChatId}
+        onNewChat={handleNewChat}
+        onSelectChat={(id) => {
+          setCurrentChatId(id);
+          setIsSidebarOpen(false);
+          // If switching to a chat, it might have messages, so state updates automatically
+        }}
+        onDeleteChat={handleDeleteChat}
+        onClearHistory={handleClearHistory}
+        isOpen={isSidebarOpen}
+        onClose={() => setIsSidebarOpen(false)}
+      />
 
-    return (
-      <div className="flex h-screen bg-[#000000] text-[#fafafa] overflow-hidden">
-        {/* Sidebar */}
-        <Sidebar
-          chats={chats}
-          currentChatId={currentChatId}
-          onNewChat={handleNewChat}
-          onSelectChat={(id) => {
-            setCurrentChatId(id);
-            setIsSidebarOpen(false);
-            // If switching to a chat, it might have messages, so state updates automatically
-          }}
-          onDeleteChat={handleDeleteChat}
-          onClearHistory={handleClearHistory}
-          isOpen={isSidebarOpen}
-          onClose={() => setIsSidebarOpen(false)}
-        />
+      {/* Main Content */}
+      <div className="flex-1 flex flex-col relative min-w-0">
+        {/* Navbar */}
+        <header className="h-16 flex items-center justify-between px-4 md:px-6 bg-[#000000]/80 backdrop-blur-md z-30 sticky top-0">
+          <div className="flex items-center gap-4">
+            {/* Mobile Menu Trigger */}
+            <button
+              onClick={() => setIsSidebarOpen(true)}
+              className="md:hidden p-2 hover:bg-[#1c1c1e] rounded-lg transition-all text-[#a1a1aa]"
+            >
+              <Menu className="w-5 h-5" />
+            </button>
 
-        {/* Main Content */}
-        <div className="flex-1 flex flex-col relative min-w-0">
-          {/* Navbar */}
-          <header className="h-16 flex items-center justify-between px-4 md:px-6 bg-[#000000]/80 backdrop-blur-md z-30 sticky top-0">
-            <div className="flex items-center gap-4">
-              {/* Mobile Menu Trigger */}
+            {/* Model Selector (Left aligned now) */}
+            <div className="relative">
               <button
-                onClick={() => setIsSidebarOpen(true)}
-                className="md:hidden p-2 hover:bg-[#1c1c1e] rounded-lg transition-all text-[#a1a1aa]"
+                onClick={() => setShowModelSelector(!showModelSelector)}
+                className="flex items-center gap-2 px-3 py-1.5 rounded-lg hover:bg-[#1c1c1e] transition-all text-sm font-medium text-[#a1a1aa] hover:text-white"
               >
-                <Menu className="w-5 h-5" />
+                <span className="opacity-70">Grok 2</span>
+                <span className="text-xs text-[#71717a]">beta</span>
+                <ChevronDown className="w-3.5 h-3.5 opacity-50" />
               </button>
-
-              {/* Model Selector (Left aligned now) */}
-              <div className="relative">
-                <button
-                  onClick={() => setShowModelSelector(!showModelSelector)}
-                  className="flex items-center gap-2 px-3 py-1.5 rounded-lg hover:bg-[#1c1c1e] transition-all text-sm font-medium text-[#a1a1aa] hover:text-white"
-                >
-                  <span className="opacity-70">Grok 2</span>
-                  <span className="text-xs text-[#71717a]">beta</span>
-                  <ChevronDown className="w-3.5 h-3.5 opacity-50" />
-                </button>
-                {/* ... Model Dropdown logic (keep existing if needed, simplified for brevity) ... */}
-                {showModelSelector && (
-                  <div className="absolute top-full left-0 mt-2 w-56 bg-[#18181b] border border-[#27272a] rounded-xl shadow-2xl py-2 z-50 overflow-hidden animate-in fade-in zoom-in-95 duration-200">
-                    {[
-                      { id: "llama-3.1-8b-instant", name: "Grok 2 (Llama)", desc: "Fastest" },
-                      { id: "llama-3.3-70b-versatile", name: "Grok 2 Vision", desc: "Capable" },
-                    ].map((m) => (
-                      <button
-                        key={m.id}
-                        onClick={() => {
-                          setModel(m.id);
-                          setShowModelSelector(false);
-                        }}
-                        className={`w-full text-left px-4 py-3 flex flex-col gap-0.5 transition-all hover:bg-[#27272a] ${model === m.id ? 'bg-[#27272a]/50' : ''}`}
-                      >
-                        <span className={`text-sm font-semibold ${model === m.id ? 'text-[#4361ee]' : 'text-[#fafafa]'}`}>{m.name}</span>
-                        <span className="text-[10px] text-[#71717a]">{m.desc}</span>
-                      </button>
-                    ))}
-                  </div>
-                )}
-              </div>
-            </div>
-
-            <div className="flex items-center gap-2">
-              <button className="p-2 text-[#a1a1aa] hover:text-white hover:bg-[#1c1c1e] rounded-lg transition-all">
-                <Share2 className="w-5 h-5" />
-              </button>
-            </div>
-          </header>
-
-          {/* Content Area */}
-          <div className="flex-1 overflow-hidden relative">
-            {!hasMessages ? (
-              <EmptyState onSend={(msg) => handleSend(msg, false, "English")} />
-            ) : (
-              <div className="h-full flex flex-col">
-                <ChatWindow
-                  messages={currentChat?.messages || []}
-                  isLoading={isLoading}
-                />
-                <div className="p-4 md:p-6 max-w-3xl mx-auto w-full">
-                  <InputBar onSend={handleSend} isLoading={isLoading} />
+              {/* ... Model Dropdown logic (keep existing if needed, simplified for brevity) ... */}
+              {showModelSelector && (
+                <div className="absolute top-full left-0 mt-2 w-56 bg-[#18181b] border border-[#27272a] rounded-xl shadow-2xl py-2 z-50 overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+                  {[
+                    { id: "llama-3.1-8b-instant", name: "Grok 2 (Llama)", desc: "Fastest" },
+                    { id: "llama-3.3-70b-versatile", name: "Grok 2 Vision", desc: "Capable" },
+                  ].map((m) => (
+                    <button
+                      key={m.id}
+                      onClick={() => {
+                        setModel(m.id);
+                        setShowModelSelector(false);
+                      }}
+                      className={`w-full text-left px-4 py-3 flex flex-col gap-0.5 transition-all hover:bg-[#27272a] ${model === m.id ? 'bg-[#27272a]/50' : ''}`}
+                    >
+                      <span className={`text-sm font-semibold ${model === m.id ? 'text-[#4361ee]' : 'text-[#fafafa]'}`}>{m.name}</span>
+                      <span className="text-[10px] text-[#71717a]">{m.desc}</span>
+                    </button>
+                  ))}
                 </div>
-              </div>
-            )}
+              )}
+            </div>
           </div>
+
+          <div className="flex items-center gap-2">
+            <button className="p-2 text-[#a1a1aa] hover:text-white hover:bg-[#1c1c1e] rounded-lg transition-all">
+              <Share2 className="w-5 h-5" />
+            </button>
+          </div>
+        </header>
+
+        {/* Content Area */}
+        <div className="flex-1 overflow-hidden relative">
+          {!hasMessages ? (
+            <EmptyState onSend={(msg) => handleSend(msg, false, "English")} />
+          ) : (
+            <div className="h-full flex flex-col">
+              <ChatWindow
+                messages={currentChat?.messages || []}
+                isLoading={isLoading}
+              />
+              <div className="p-4 md:p-6 max-w-3xl mx-auto w-full">
+                <InputBar onSend={handleSend} isLoading={isLoading} />
+              </div>
+            </div>
+          )}
         </div>
       </div>
-    );
-  }
+    </div>
+  );
+}
 
