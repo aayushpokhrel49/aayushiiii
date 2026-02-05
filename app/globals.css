@@ -1,8 +1,15 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #050505;
+  --foreground: #fafafa;
+  --primary: #4361ee;
+  --primary-foreground: #ffffff;
+  --muted: #18181b;
+  --muted-foreground: #a1a1aa;
+  --border: #27272a;
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-bg: rgba(24, 24, 27, 0.6);
 }
 
 @theme inline {
@@ -12,15 +19,105 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "cv02", "cv03", "cv04", "ss01";
+    background-image: loading="lazy" radial-gradient(circle at 50% 0%, rgba(67, 97, 238, 0.05) 0%, transparent 40%);
+    background-attachment: fixed;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer utilities {
+  .glass-panel {
+    @apply bg-black/40 backdrop-blur-xl border border-white/10 shadow-xl;
+  }
+
+  .glass-button {
+    @apply bg-white/5 hover:bg-white/10 active:bg-white/5 border border-white/5 hover:border-white/10 transition-all duration-300;
+  }
+
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-white via-white to-white/70;
+  }
+}
+
+/* Custom Scrollbar */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #3f3f46;
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #52525b;
+}
+
+/* Typography Overrides */
+.prose {
+  color: #e4e4e7 !important;
+  max-width: none !important;
+}
+
+.prose pre {
+  background-color: #0d0d0d !important;
+  border: 1px solid #27272a !important;
+  border-radius: 0.75rem !important;
+  margin: 1.5rem 0 !important;
+  padding: 0 !important;
+}
+
+.prose code {
+  color: #f4f4f5 !important;
+  font-weight: 500 !important;
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 0.1em 0.3em;
+  border-radius: 0.3em;
+}
+
+.prose pre code {
+  background-color: transparent !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+  font-family: var(--font-mono) !important;
+  font-size: 0.875rem !important;
+}
+
+.prose p {
+  line-height: 1.7;
+}
+
+.prose ul,
+.prose ol {
+  padding-left: 1.25rem;
+}
+
+.prose li {
+  margin-top: 0.25rem !important;
+  margin-bottom: 0.25rem !important;
+}
+
+/* Animations */
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-slide-up {
+  animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
