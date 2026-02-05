@@ -14,7 +14,7 @@ A premium, professional AI assistant built with Next.js, Groq, Exa, and Firebase
 
 ## Tech Stack
 
-- **Frontend**: Next.js 15 (App Router), React 19, Tailwind CSS, Framer Motion, Lucide Icons.
+- **Frontend**: Next.js 16 (App Router), React 19, Tailwind CSS, Framer Motion, Lucide Icons.
 - **Backend**: Next.js API Routes, Node.js.
 - **AI/Search**: Groq SDK, Exa SDK.
 - **Auth**: Firebase SDK.

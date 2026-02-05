@@ -35,7 +35,7 @@
 
 @layer utilities {
   .glass-panel {
-    @apply bg-[#121215]/80 backdrop-blur-2xl border border-white/10 shadow-[0_0_50px_-12px_rgba(0, 0, 0, 0.5)];
+    @apply bg-[#121215]/80 backdrop-blur-2xl border border-white/10 shadow-[0_0_50px_-12px_rgba(0,0,0,0.5)];
   }
 
   .glass-button {
