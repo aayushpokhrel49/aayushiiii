@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import { Sidebar } from "@/components/Sidebar";
 import { ChatWindow } from "@/components/ChatWindow";
 import { InputBar } from "@/components/InputBar";
+import { VoicePanel } from "@/components/VoicePanel";
 import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
 import {
@@ -46,6 +47,7 @@ export default function Home() {
   const [model, setModel] = useState("llama-3.1-8b-instant");
   const [showModelSelector, setShowModelSelector] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isVoicePanelOpen, setIsVoicePanelOpen] = useState(false);
 
   // Auth Redirect
   useEffect(() => {
@@ -231,26 +233,33 @@ export default function Home() {
       {/* Main Content */}
       <div className="flex-1 flex flex-col relative min-w-0">
         {/* Navbar */}
-        <header className="h-16 flex items-center justify-between px-4 md:px-6 bg-[#000000]/80 backdrop-blur-md z-30 sticky top-0">
+        <header className="h-16 flex items-center justify-between px-4 md:px-6 bg-[#000000]/40 backdrop-blur-xl z-30 sticky top-0 border-b border-white/5">
           <div className="flex items-center gap-4">
             {/* Mobile Menu Trigger */}
             <button
               onClick={() => setIsSidebarOpen(true)}
-              className="md:hidden p-2 hover:bg-[#1c1c1e] rounded-lg transition-all text-[#a1a1aa]"
+              className="md:hidden p-2 hover:bg-white/10 rounded-xl transition-all text-[#a1a1aa] hover:text-white active:scale-95"
             >
               <Menu className="w-5 h-5" />
             </button>
 
-            {/* Model Selector (Left aligned now) */}
-            {/* Model Selector Removed as per request */}
-            <div className="flex items-center gap-2">
-              <span className="text-sm font-medium text-zinc-400">Aayushi</span>
-              <span className="text-[10px] bg-primary/10 text-primary px-1.5 py-0.5 rounded border border-primary/20">BETA</span>
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-[#4361ee] to-[#4cc9f0] flex items-center justify-center shadow-lg shadow-[#4361ee]/20 md:hidden">
+                <Sparkles className="w-4 h-4 text-white" />
+              </div>
+              <div className="flex flex-col">
+                <span className="text-sm font-bold tracking-tight text-white leading-none">Aayushi</span>
+                <span className="text-[10px] text-zinc-500 font-medium">BETA ACCESS</span>
+              </div>
             </div>
           </div>
 
-          <div className="flex items-center gap-2">
-            <button className="p-2 text-[#a1a1aa] hover:text-white hover:bg-[#1c1c1e] rounded-lg transition-all">
+          <div className="flex items-center gap-3">
+            <button className="hidden md:flex items-center gap-2 px-3 py-1.5 bg-white/5 hover:bg-white/10 rounded-lg text-xs font-medium text-zinc-300 transition-all border border-white/5">
+              <Command className="w-3.5 h-3.5" />
+              <span>Feedback</span>
+            </button>
+            <button className="p-2 text-[#a1a1aa] hover:text-white hover:bg-white/5 rounded-xl transition-all active:scale-95">
               <Share2 className="w-5 h-5" />
             </button>
           </div>
@@ -259,7 +268,10 @@ export default function Home() {
         {/* Content Area */}
         <div className="flex-1 overflow-hidden relative">
           {!hasMessages ? (
-            <EmptyState onSend={(msg) => handleSend(msg, false, "English")} />
+            <EmptyState
+              onSend={(msg) => handleSend(msg, false, "English")}
+              onVoiceClick={() => setIsVoicePanelOpen(true)}
+            />
           ) : (
             <div className="h-full flex flex-col">
               <ChatWindow
@@ -267,11 +279,22 @@ export default function Home() {
                 isLoading={isLoading}
               />
               <div className="p-4 md:p-6 max-w-3xl mx-auto w-full">
-                <InputBar onSend={handleSend} isLoading={isLoading} />
+                <InputBar
+                  onSend={handleSend}
+                  onVoiceClick={() => setIsVoicePanelOpen(true)}
+                  isLoading={isLoading}
+                />
               </div>
             </div>
           )}
         </div>
+
+        {/* Voice Panel Overlay */}
+        <VoicePanel
+          isOpen={isVoicePanelOpen}
+          onClose={() => setIsVoicePanelOpen(false)}
+          onFinalTranscript={(transcript) => handleSend(transcript, false, "English")}
+        />
       </div>
     </div>
   );

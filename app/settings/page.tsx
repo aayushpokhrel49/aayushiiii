@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
-import { ArrowLeft, Monitor, Moon, Sun, Globe, Bell, Shield, Smartphone } from "lucide-react";
+import { ArrowLeft, Monitor, Moon, Sun, Globe, Bell, Shield, Smartphone, User as UserIcon, Mail, ExternalLink } from "lucide-react";
 import Link from "next/link";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
@@ -136,6 +136,45 @@ export default function SettingsPage() {
                         label="Data Controls"
                         description="Manage your chat history and data"
                         action={<button className="text-xs font-medium text-primary hover:underline">Manage</button>}
+                    />
+                </Section>
+
+                <Section title="Developer Info">
+                    <Item
+                        icon={<UserIcon className="w-5 h-5" />}
+                        label="Developer"
+                        description="Created and maintained by"
+                        action={<span className="text-sm text-zinc-300 font-medium">Aayush Pokhrel</span>}
+                    />
+                    <Item
+                        icon={<Globe className="w-5 h-5" />}
+                        label="Website"
+                        description="Visit the official website"
+                        action={
+                            <a
+                                href="https://aayushhpokhrel.com.np"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="inline-flex items-center gap-1.5 text-xs font-medium text-primary hover:underline"
+                            >
+                                <span>aayushhpokhrel.com.np</span>
+                                <ExternalLink className="w-3 h-3" />
+                            </a>
+                        }
+                    />
+                    <Item
+                        icon={<Mail className="w-5 h-5" />}
+                        label="Email"
+                        description="Get in touch for support or feedback"
+                        action={
+                            <a
+                                href="mailto:info@aayushhpokhrel.com.np"
+                                className="inline-flex items-center gap-1.5 text-xs font-medium text-primary hover:underline"
+                            >
+                                <span>info@aayushhpokhrel.com.np</span>
+                                <Mail className="w-3 h-3" />
+                            </a>
+                        }
                     />
                 </Section>
 

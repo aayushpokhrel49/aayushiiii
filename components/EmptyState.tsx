@@ -1,11 +1,13 @@
 import React from "react";
-import { Mic, Search, ChevronDown, Sparkles, Image as ImageIcon, Users, MessageCircle } from "lucide-react";
+import { motion } from "framer-motion";
+import { Mic, Search, Sparkles, Image as ImageIcon, Users, MessageCircle, ArrowRight } from "lucide-react";
 
 interface EmptyStateProps {
     onSend: (message: string) => void;
+    onVoiceClick: () => void;
 }
 
-export const EmptyState: React.FC<EmptyStateProps> = ({ onSend }) => {
+export const EmptyState: React.FC<EmptyStateProps> = ({ onSend, onVoiceClick }) => {
     const [inputValue, setInputValue] = React.useState("");
 
     const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -18,68 +20,135 @@ export const EmptyState: React.FC<EmptyStateProps> = ({ onSend }) => {
     };
 
     return (
-        <div className="flex flex-col items-center justify-center h-full max-w-3xl mx-auto px-4 w-full">
-            {/* Logo */}
-            <div className="mb-12 relative group cursor-default">
-                <div className="absolute -inset-4 bg-gradient-to-r from-blue-600 to-violet-600 rounded-full blur-xl opacity-20 group-hover:opacity-40 transition duration-1000 group-hover:duration-200 animate-pulse" />
-                <div className="flex items-center gap-4 relative">
-                    <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#1e1e24] to-[#121215] border border-white/10 shadow-2xl flex items-center justify-center">
-                        <Sparkles className="w-8 h-8 text-primary" />
-                    </div>
-                    <span className="text-5xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-br from-white via-white to-white/50">
-                        Aayushi
-                    </span>
-                </div>
+        <div className="flex flex-col items-center justify-center min-h-screen max-w-4xl mx-auto px-6 w-full relative overflow-hidden">
+            {/* Ambient Background Glows */}
+            <div className="absolute inset-0 pointer-events-none overflow-hidden">
+                <motion.div
+                    animate={{
+                        opacity: [0.05, 0.1, 0.05],
+                        scale: [1, 1.1, 1]
+                    }}
+                    transition={{ duration: 8, repeat: Infinity }}
+                    className="absolute top-1/4 -left-1/4 w-[600px] h-[600px] bg-[#4361ee]/20 rounded-full blur-[120px]"
+                />
+                <motion.div
+                    animate={{
+                        opacity: [0.03, 0.08, 0.03],
+                        scale: [1.1, 1, 1.1]
+                    }}
+                    transition={{ duration: 10, repeat: Infinity }}
+                    className="absolute bottom-1/4 -right-1/4 w-[500px] h-[500px] bg-[#4cc9f0]/10 rounded-full blur-[100px]"
+                />
             </div>
 
-            {/* Input Container */}
-            <div className="w-full relative group max-w-2xl">
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-
-                <div className="relative bg-[#09090b]/80 backdrop-blur-xl border border-[#27272a] rounded-[24px] p-2 flex items-center shadow-2xl transition-all focus-within:border-[#4361ee]/50 focus-within:ring-1 focus-within:ring-[#4361ee]/20 group-hover:border-white/10">
-                    <div className="pl-5 py-3 flex-1">
-                        <input
-                            type="text"
-                            value={inputValue}
-                            onChange={(e) => setInputValue(e.target.value)}
-                            onKeyDown={handleKeyDown}
-                            placeholder="How can I help you today?"
-                            className="w-full bg-transparent border-none outline-none text-lg text-white placeholder:text-[#52525b] font-light"
-                            autoFocus
+            <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8 }}
+                className="w-full flex flex-col items-center relative z-10"
+            >
+                {/* Logo Section */}
+                <div className="mb-16 flex flex-col items-center group">
+                    <div className="relative mb-8">
+                        <motion.div
+                            animate={{ rotate: 360 }}
+                            transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                            className="absolute -inset-6 bg-gradient-to-tr from-[#4361ee]/30 to-[#4cc9f0]/20 rounded-full blur-2xl opacity-50 group-hover:opacity-100 transition-opacity duration-1000"
                         />
+                        <div className="relative w-24 h-24 rounded-[32px] bg-gradient-to-br from-[#4361ee] via-[#4361ee] to-[#4cc9f0] border border-white/20 shadow-2xl flex items-center justify-center transform group-hover:scale-110 group-hover:rotate-6 transition-all duration-700">
+                            <Sparkles className="w-12 h-12 text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.8)]" />
+                        </div>
                     </div>
 
-                    <div className="flex items-center gap-2 pr-2">
-                        <button className="p-2.5 rounded-xl hover:bg-white/5 text-[#a1a1aa] hover:text-white transition-all duration-200">
-                            <Mic className="w-5 h-5" />
-                        </button>
+                    <div className="text-center">
+                        <h1 className="text-5xl md:text-8xl font-black tracking-tighter text-white mb-4">
+                            Aayushi
+                        </h1>
+                        <div className="flex items-center gap-3 justify-center">
+                            <div className="h-px w-8 bg-gradient-to-r from-transparent to-[#4361ee]" />
+                            <span className="text-[10px] md:text-xs text-zinc-500 font-black tracking-[0.4em] uppercase">Intelligence Core</span>
+                            <div className="h-px w-8 bg-gradient-to-l from-transparent to-[#4361ee]" />
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            {/* Action Pills */}
-            <div className="mt-10 flex flex-wrap gap-3 justify-center max-w-2xl">
-                {[
-                    { icon: <Search className="w-3.5 h-3.5" />, label: "DeepSearch" },
-                    { icon: <ImageIcon className="w-3.5 h-3.5" />, label: "Generate Image" },
-                    { icon: <Users className="w-3.5 h-3.5" />, label: "Brainstorm" },
-                    { icon: <MessageCircle className="w-3.5 h-3.5" />, label: "Chat" },
-                ].map((action, idx) => (
-                    <button
-                        key={idx}
-                        className="flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/5 hover:bg-white/10 hover:border-white/10 rounded-xl text-sm text-[#a1a1aa] hover:text-white transition-all hover:-translate-y-0.5"
-                    >
-                        {action.icon}
-                        <span>{action.label}</span>
-                    </button>
-                ))}
-            </div>
+                {/* Search Interaction Dock */}
+                <div className="w-full max-w-2xl relative group mb-12">
+                    <div className="absolute -inset-1 bg-gradient-to-r from-[#4361ee]/20 to-[#4cc9f0]/20 rounded-[34px] blur-xl opacity-0 group-hover:opacity-100 transition-all duration-700" />
 
-            <div className="mt-12 text-[#3f3f46] text-xs font-medium tracking-wide">
-                Aayushi can make mistakes. Verify important information.
-            </div>
+                    <div className="relative bg-[#121215]/80 backdrop-blur-3xl border border-white/5 rounded-[30px] p-2 flex items-center shadow-[0_30px_60px_-15px_rgba(0,0,0,0.7)] transition-all duration-500 focus-within:border-[#4361ee]/30 focus-within:shadow-[0_0_80px_-20px_rgba(67,97,238,0.3)]">
+                        <div className="pl-6 py-4 flex-1">
+                            <input
+                                type="text"
+                                value={inputValue}
+                                onChange={(e) => setInputValue(e.target.value)}
+                                onKeyDown={handleKeyDown}
+                                placeholder="Initialize a new conversation..."
+                                className="w-full bg-transparent border-none outline-none text-xl text-white placeholder:text-zinc-700 font-light tracking-wide"
+                                autoFocus
+                            />
+                        </div>
+
+                        <div className="flex items-center gap-2 pr-3">
+                            <button
+                                onClick={onVoiceClick}
+                                className="p-3.5 rounded-2xl bg-white/5 text-zinc-400 hover:text-[#4361ee] hover:bg-white/10 transition-all active:scale-90"
+                                title="Voice Activation"
+                            >
+                                <Mic className="w-6 h-6" />
+                            </button>
+
+                            {inputValue.trim() && (
+                                <motion.button
+                                    initial={{ scale: 0.8, opacity: 0 }}
+                                    animate={{ scale: 1, opacity: 1 }}
+                                    onClick={() => onSend(inputValue)}
+                                    className="p-3.5 rounded-2xl bg-white text-[#4361ee] shadow-xl hover:scale-105 active:scale-95 transition-all"
+                                >
+                                    <ArrowRight className="w-6 h-6" />
+                                </motion.button>
+                            )}
+                        </div>
+                    </div>
+                </div>
+
+                {/* Advanced Action Grid */}
+                <div className="flex flex-wrap gap-4 justify-center max-w-2xl opacity-80 hover:opacity-100 transition-opacity">
+                    {[
+                        { icon: <Search className="w-4 h-4" />, label: "Nexus Search", desc: "Global data retrieval" },
+                        { icon: <ImageIcon className="w-4 h-4" />, label: "Vision Lab", desc: "Generative imagery" },
+                        { icon: <Users className="w-4 h-4" />, label: "Synth Mind", desc: "Expert brainstorming" },
+                        { icon: <MessageCircle className="w-4 h-4" />, label: "Neural Chat", desc: "Fluent dialogue" },
+                    ].map((action, idx) => (
+                        <motion.button
+                            key={idx}
+                            whileHover={{ y: -5, backgroundColor: "rgba(255,255,255,0.08)" }}
+                            className="flex flex-col items-start gap-1 px-5 py-4 bg-white/5 border border-white/5 rounded-[24px] text-left transition-all group w-[160px]"
+                        >
+                            <div className="p-2 bg-white/5 rounded-xl text-[#4361ee] group-hover:bg-[#4361ee] group-hover:text-white transition-colors mb-2">
+                                {action.icon}
+                            </div>
+                            <span className="text-[11px] font-black uppercase tracking-wider text-white">{action.label}</span>
+                            <span className="text-[9px] text-zinc-500 font-bold leading-tight">{action.desc}</span>
+                        </motion.button>
+                    ))}
+                </div>
+            </motion.div>
+
+            {/* Footer Tagline */}
+            <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 0.3 }}
+                transition={{ delay: 1, duration: 1 }}
+                className="absolute bottom-12 left-0 right-0 text-center"
+            >
+                <p className="text-[10px] text-zinc-600 font-black uppercase tracking-[0.5em]">
+                    Powered by Aayushi Digital Core v1.0
+                </p>
+            </motion.div>
         </div>
     );
 };
+
 
 
