@@ -1,6 +1,10 @@
 # Aayushi - Full-Stack AI Chat Application
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 A premium, professional AI assistant built with Next.js, Groq, Exa, and Firebase.
+
+Licensed under the **MIT License** — see the [LICENSE](LICENSE) file for details.
 
 ## Features
 
