@@ -1,7 +1,19 @@
 @import "tailwindcss";
 
 :root {
-  --background: #050505;
+  --background: #ffffff;
+  --foreground: #09090b;
+  --primary: #4361ee;
+  --primary-foreground: #ffffff;
+  --muted: #f4f4f5;
+  --muted-foreground: #71717a;
+  --border: #e4e4e7;
+  --glass-border: rgba(0, 0, 0, 0.08);
+  --glass-bg: rgba(255, 255, 255, 0.7);
+}
+
+.dark {
+  --background: #09090b;
   --foreground: #fafafa;
   --primary: #4361ee;
   --primary-foreground: #ffffff;
@@ -15,45 +27,31 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
 @layer base {
   body {
-    @apply bg-background text-foreground antialiased;
-    font-feature-settings: "cv02", "cv03", "cv04", "ss01";
-    background-image: radial-gradient(circle at 50% 0%, rgba(67, 97, 238, 0.08) 0%, transparent 50%), radial-gradient(circle at 100% 0%, rgba(124, 58, 237, 0.05) 0%, transparent 40%);
-    background-attachment: fixed;
-  }
-
-  ::selection {
-    background-color: rgba(67, 97, 238, 0.3);
-    color: white;
+    @apply bg-background text-foreground antialiased transition-colors duration-300;
   }
 }
 
 @layer utilities {
   .glass-panel {
-    @apply bg-[#121215]/80 backdrop-blur-2xl border border-white/10 shadow-[0_0_50px_-12px_rgba(0,0,0,0.5)];
+    @apply bg-background/80 backdrop-blur-2xl border border-border shadow-sm;
   }
 
   .glass-button {
-    @apply bg-white/5 hover:bg-white/10 active:scale-95 border border-white/5 hover:border-white/10 transition-all duration-300;
+    @apply bg-muted/50 hover:bg-muted active:scale-95 border border-border transition-all duration-200;
   }
 
   .text-gradient {
-    @apply bg-clip-text text-transparent bg-gradient-to-br from-white via-white to-white/50;
-  }
-
-  .premium-shimmer {
-    @apply relative overflow-hidden;
-  }
-
-  .premium-shimmer::after {
-    content: "";
-    @apply absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/10 to-transparent skew-x-[-20deg];
-    animation: shimmer 3s infinite linear;
+    @apply bg-clip-text text-transparent bg-gradient-to-br from-foreground via-foreground to-foreground/70;
   }
 }
 

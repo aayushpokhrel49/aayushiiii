@@ -14,10 +14,13 @@ import {
   Sparkles,
   Command,
   Search,
-  Share2
+  Share2,
+  Sun,
+  Moon
 } from "lucide-react";
 import { v4 as uuidv4 } from "uuid";
 import { EmptyState } from "@/components/EmptyState";
+import { useTheme } from "@/context/ThemeContext";
 
 interface Source {
   title: string;
@@ -40,6 +43,7 @@ interface Chat {
 export default function Home() {
   const { user, loading } = useAuth();
   const router = useRouter();
+  const { theme, toggleTheme } = useTheme();
 
   const [chats, setChats] = useState<Chat[]>([]);
   const [currentChatId, setCurrentChatId] = useState<string | null>(null);
@@ -213,7 +217,7 @@ export default function Home() {
   const hasMessages = currentChat && currentChat.messages.length > 0;
 
   return (
-    <div className="flex h-screen bg-[#000000] text-[#fafafa] overflow-hidden">
+    <div className="flex h-screen bg-background text-foreground overflow-hidden">
       {/* Sidebar */}
       <Sidebar
         chats={chats}
@@ -233,7 +237,7 @@ export default function Home() {
       {/* Main Content */}
       <div className="flex-1 flex flex-col relative min-w-0">
         {/* Navbar */}
-        <header className="h-16 flex items-center justify-between px-4 md:px-6 bg-[#000000]/40 backdrop-blur-xl z-30 sticky top-0 border-b border-white/5">
+        <header className="h-16 flex items-center justify-between px-4 md:px-6 bg-background/40 backdrop-blur-xl z-30 sticky top-0 border-b border-border">
           <div className="flex items-center gap-4">
             {/* Mobile Menu Trigger */}
             <button
@@ -259,7 +263,14 @@ export default function Home() {
               <Command className="w-3.5 h-3.5" />
               <span>Feedback</span>
             </button>
-            <button className="p-2 text-[#a1a1aa] hover:text-white hover:bg-white/5 rounded-xl transition-all active:scale-95">
+            <button
+              onClick={toggleTheme}
+              className="p-2 text-muted-foreground hover:text-foreground hover:bg-muted rounded-xl transition-all active:scale-95"
+              title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+            >
+              {theme === "dark" ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+            </button>
+            <button className="p-2 text-muted-foreground hover:text-foreground hover:bg-muted rounded-xl transition-all active:scale-95">
               <Share2 className="w-5 h-5" />
             </button>
           </div>

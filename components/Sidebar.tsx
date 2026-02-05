@@ -65,22 +65,19 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 onClick={onClose}
             />
 
-            {/* Sidebar Content (Glassmorphism) */}
+            {/* Sidebar Content */}
             <aside className={cn(
-                "bg-[#09090b]/90 backdrop-blur-2xl border-r border-white/5 flex flex-col items-center py-6 h-full transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] z-50 shadow-[20px_0_50px_-20px_rgba(0,0,0,0.5)]",
+                "bg-background/95 backdrop-blur-2xl border-r border-border flex flex-col items-center py-6 h-full transition-all duration-300 ease-in-out z-50",
                 "fixed inset-y-0 left-0 w-20 md:relative md:translate-x-0",
                 isOpen ? "translate-x-0 w-72 items-stretch px-3" : "-translate-x-full md:translate-x-0"
             )}>
-                {/* Logo / New Chat Trigger */}
                 <div className="mb-10 flex justify-center">
                     <button
                         onClick={onNewChat}
                         className="relative w-12 h-12 flex items-center justify-center group"
                     >
-                        <div className="absolute inset-0 bg-[#4361ee]/30 blur-2xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-                        <div className="relative w-11 h-11 bg-gradient-to-br from-[#4361ee] via-[#4361ee] to-[#4cc9f0] rounded-2xl flex items-center justify-center text-white shadow-2xl shadow-[#4361ee]/20 group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 active:scale-95 border border-white/20 overflow-hidden">
-                            <div className="absolute inset-0 bg-gradient-to-tr from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                            <Sparkles className="w-5 h-5 drop-shadow-[0_0_10px_rgba(255,255,255,0.7)]" strokeWidth={2.5} />
+                        <div className="relative w-11 h-11 bg-primary rounded-2xl flex items-center justify-center text-primary-foreground shadow-lg group-hover:scale-105 transition-all duration-300 active:scale-95 border border-primary/20">
+                            <Sparkles className="w-5 h-5" strokeWidth={2.5} />
                         </div>
                     </button>
                 </div>
@@ -90,16 +87,16 @@ export const Sidebar: React.FC<SidebarProps> = ({
                     <button
                         onClick={onNewChat}
                         className={cn(
-                            "flex items-center gap-3.5 p-3.5 bg-white/5 hover:bg-white/10 rounded-2xl text-white transition-all duration-300 group relative w-full border border-white/5 hover:border-white/10 shadow-lg hover:shadow-white/5",
+                            "flex items-center gap-3 p-3.5 bg-muted/50 hover:bg-muted rounded-2xl text-foreground transition-all duration-300 group relative w-full border border-border",
                             !isOpen && "justify-center"
                         )}
                         title="New Chat"
                     >
-                        <Plus className="w-5 h-5 flex-shrink-0 text-[#4361ee] group-hover:rotate-90 transition-transform duration-500" />
-                        {isOpen && <span className="font-black text-xs uppercase tracking-[0.2em]">New Thread</span>}
+                        <Plus className="w-5 h-5 flex-shrink-0 text-primary group-hover:rotate-90 transition-transform duration-300" />
+                        {isOpen && <span className="font-semibold text-xs tracking-tight">New Chat</span>}
                         {!isOpen && (
-                            <div className="absolute left-20 bg-[#121215] border border-white/10 text-[10px] font-black uppercase tracking-widest px-3 py-2 rounded-xl opacity-0 group-hover:opacity-100 transition-all translate-x-[-10px] group-hover:translate-x-0 whitespace-nowrap z-50 pointer-events-none shadow-2xl">
-                                New Thread
+                            <div className="absolute left-20 bg-background border border-border text-[10px] font-medium tracking-tight px-3 py-2 rounded-xl opacity-0 group-hover:opacity-100 transition-all translate-x-[-10px] group-hover:translate-x-0 whitespace-nowrap z-50 pointer-events-none shadow-xl">
+                                New Chat
                             </div>
                         )}
                     </button>
@@ -109,10 +106,10 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 <div className="flex-1 w-full overflow-hidden flex flex-col">
                     {isOpen && (
                         <div className="px-5 mb-4 flex items-center justify-between">
-                            <span className="text-[10px] font-black text-zinc-600 uppercase tracking-[0.3em]">Recent Archive</span>
+                            <span className="text-[10px] font-semibold text-muted-foreground uppercase tracking-widest">History</span>
                             <button
                                 onClick={onClearHistory}
-                                className="p-1.5 text-zinc-600 hover:text-red-500 transition-all rounded-lg hover:bg-red-500/10"
+                                className="p-1.5 text-muted-foreground hover:text-red-500 transition-all rounded-lg hover:bg-red-500/10"
                                 title="Clear History"
                             >
                                 <Trash2 className="w-3.5 h-3.5" />
@@ -138,7 +135,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                                     currentChatId === chat.chatId ? "bg-[#4361ee] shadow-[0_0_8px_#4361ee]" : "bg-zinc-800"
                                 )} />
                                 {isOpen && (
-                                    <span className="text-[11px] font-bold tracking-wide truncate pr-6 text-left flex-1">{chat.title}</span>
+                                    <span className="text-xs font-medium tracking-tight truncate pr-6 text-left flex-1">{chat.title}</span>
                                 )}
 
                                 {isOpen && (
@@ -154,7 +151,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                                 )}
 
                                 {!isOpen && (
-                                    <div className="absolute left-20 bg-[#121215] border border-white/10 text-[10px] font-black uppercase tracking-widest px-3 py-2 rounded-xl opacity-0 group-hover:opacity-100 transition-all translate-x-[-10px] group-hover:translate-x-0 whitespace-nowrap z-50 pointer-events-none shadow-2xl">
+                                    <div className="absolute left-20 bg-background border border-border text-[10px] font-medium tracking-tight px-3 py-2 rounded-xl opacity-0 group-hover:opacity-100 transition-all translate-x-[-10px] group-hover:translate-x-0 whitespace-nowrap z-50 pointer-events-none shadow-xl">
                                         {chat.title}
                                     </div>
                                 )}
@@ -211,11 +208,11 @@ export const Sidebar: React.FC<SidebarProps> = ({
                                             initial={{ opacity: 0, scale: 0.9, y: 10, x: isOpen ? 0 : 20 }}
                                             animate={{ opacity: 1, scale: 1, y: 0, x: isOpen ? 0 : 20 }}
                                             exit={{ opacity: 0, scale: 0.9, y: 10 }}
-                                            className="absolute bottom-full left-4 mb-4 w-60 bg-[#121215]/95 backdrop-blur-3xl border border-white/10 rounded-[28px] shadow-[0_20px_50px_rgba(0,0,0,0.5)] p-2 z-50 overflow-hidden"
+                                            className="absolute bottom-full left-4 mb-4 w-60 bg-background border border-border rounded-2xl shadow-xl p-2 z-50 overflow-hidden"
                                         >
-                                            <div className="px-4 py-4 mb-2 bg-white/5 rounded-2xl border border-white/5">
-                                                <p className="text-xs font-black text-white truncate uppercase tracking-widest">{user.displayName || 'Architect'}</p>
-                                                <p className="text-[10px] text-zinc-500 truncate mt-1">{user.email}</p>
+                                            <div className="px-4 py-4 mb-2 bg-muted rounded-xl border border-border">
+                                                <p className="text-xs font-semibold text-foreground truncate">{user.displayName || 'User'}</p>
+                                                <p className="text-[10px] text-muted-foreground truncate mt-1">{user.email}</p>
                                             </div>
 
                                             <div className="grid grid-cols-1 gap-1">
@@ -245,10 +242,10 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
                                                 <button
                                                     onClick={() => signOut()}
-                                                    className="w-full text-left px-4 py-3 text-[10px] font-black uppercase tracking-widest text-red-500/70 hover:text-red-400 hover:bg-red-500/10 rounded-xl flex items-center gap-3 transition-all"
+                                                    className="w-full text-left px-4 py-3 text-[10px] font-semibold uppercase tracking-widest text-red-500/70 hover:text-red-500 hover:bg-red-500/10 rounded-xl flex items-center gap-3 transition-all"
                                                 >
                                                     <LogOut className="w-4 h-4" />
-                                                    Deactivate
+                                                    Logout
                                                 </button>
                                             </div>
                                         </motion.div>
