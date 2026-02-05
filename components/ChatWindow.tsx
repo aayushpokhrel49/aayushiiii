@@ -46,7 +46,7 @@ const SourcesDisplay = ({ sources }: { sources: Source[] }) => {
                         exit={{ height: 0, opacity: 0 }}
                         className="overflow-hidden"
                     >
-                        <div className="flex gap-3 overflow-x-auto pb-4 pt-1 px-1 custom-scrollbar snap-x">
+                        <div className="flex gap-3 overflow-x-auto pb-4 pt-1 px-1 custom-scrollbar snap-x max-w-full w-full">
                             {sources.map((source, idx) => (
                                 <a
                                     key={idx}
@@ -144,8 +144,8 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({ messages, isLoading }) =
                                 className={`flex gap-4 md:gap-6 ${msg.role === "user" ? "flex-row-reverse" : "flex-row"}`}
                             >
                                 <div className={`w-8 h-8 md:w-10 md:h-10 rounded-2xl flex-shrink-0 flex items-center justify-center shadow-lg border border-white/5 ${msg.role === "user"
-                                        ? "bg-zinc-800 text-zinc-400"
-                                        : "bg-gradient-to-br from-primary to-blue-600 text-white shadow-primary/20"
+                                    ? "bg-zinc-800 text-zinc-400"
+                                    : "bg-gradient-to-br from-primary to-blue-600 text-white shadow-primary/20"
                                     }`}>
                                     {msg.role === "user" ? <User className="w-5 h-5" /> : <Sparkles className="w-5 h-5" />}
                                 </div>
@@ -157,8 +157,8 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({ messages, isLoading }) =
                                     )}
 
                                     <div className={`px-6 py-5 rounded-3xl relative shadow-sm ${msg.role === "user"
-                                            ? "bg-zinc-800/80 text-zinc-100 rounded-tr-sm"
-                                            : "glass-panel rounded-tl-sm text-zinc-200"
+                                        ? "bg-gradient-to-br from-zinc-800 to-zinc-900 border border-white/5 text-zinc-100 rounded-tr-sm"
+                                        : "bg-transparent border border-transparent text-zinc-200"
                                         }`}>
                                         <div className="markdown-content">
                                             <MarkdownRenderer content={msg.content} />

@@ -49,6 +49,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
     onClose,
 }) => {
     const { user, signOut } = useAuth();
+    const [isProfileOpen, setIsProfileOpen] = React.useState(false);
 
     return (
         <>
@@ -105,13 +106,69 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 {/* Bottom Actions */}
                 <div className="mt-auto flex flex-col gap-6 items-center w-full pb-4">
                     {user && (
-                        <button onClick={signOut} className="p-1 rounded-full overflow-hidden w-8 h-8 ring-2 ring-[#2c2c2e]">
-                            {user.photoURL ? (
-                                <img src={user.photoURL} alt="User" className="w-full h-full object-cover" />
-                            ) : (
-                                <UserIcon className="w-5 h-5 text-gray-400 m-auto" />
+                        <div className="relative group">
+                            <button
+                                onClick={() => setIsProfileOpen(!isProfileOpen)}
+                                className="p-1 rounded-full overflow-hidden w-8 h-8 ring-2 ring-[#2c2c2e] hover:ring-[#4361ee] transition-all"
+                            >
+                                {user.photoURL ? (
+                                    <img src={user.photoURL} alt="User" className="w-full h-full object-cover" />
+                                ) : (
+                                    <div className="w-full h-full bg-zinc-800 flex items-center justify-center">
+                                        <UserIcon className="w-4 h-4 text-zinc-400" />
+                                    </div>
+                                )}
+                            </button>
+
+                            {/* Profile Dropdown */}
+                            {isProfileOpen && (
+                                <>
+                                    <div
+                                        className="fixed inset-0 z-40"
+                                        onClick={() => setIsProfileOpen(false)}
+                                    />
+                                    <div className="absolute bottom-full left-0 mb-3 w-48 bg-[#18181b] border border-[#27272a] rounded-xl shadow-2xl py-1.5 z-50 overflow-hidden animate-in fade-in slide-in-from-bottom-2">
+
+                                        <div className="px-3 py-2 border-b border-white/5 mb-1">
+                                            <p className="text-xs font-semibold text-white truncate">{user.displayName || 'User'}</p>
+                                            <p className="text-[10px] text-zinc-500 truncate">{user.email}</p>
+                                        </div>
+
+                                        <button
+                                            onClick={() => {
+                                                setIsProfileOpen(false);
+                                                window.location.href = '/profile';
+                                            }}
+                                            className="w-full text-left px-3 py-2 text-xs text-zinc-300 hover:text-white hover:bg-white/5 flex items-center gap-2 transition-colors"
+                                        >
+                                            <UserIcon className="w-3.5 h-3.5" />
+                                            Profile
+                                        </button>
+
+                                        <button
+                                            onClick={() => {
+                                                setIsProfileOpen(false);
+                                                window.location.href = '/settings';
+                                            }}
+                                            className="w-full text-left px-3 py-2 text-xs text-zinc-300 hover:text-white hover:bg-white/5 flex items-center gap-2 transition-colors"
+                                        >
+                                            <Settings className="w-3.5 h-3.5" />
+                                            Settings
+                                        </button>
+
+                                        <div className="h-px bg-white/5 my-1" />
+
+                                        <button
+                                            onClick={() => signOut()}
+                                            className="w-full text-left px-3 py-2 text-xs text-red-400 hover:text-red-300 hover:bg-red-500/10 flex items-center gap-2 transition-colors"
+                                        >
+                                            <LogOut className="w-3.5 h-3.5" />
+                                            Sign Out
+                                        </button>
+                                    </div>
+                                </>
                             )}
-                        </button>
+                        </div>
                     )}
                 </div>
             </aside>

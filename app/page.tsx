@@ -242,36 +242,10 @@ export default function Home() {
             </button>
 
             {/* Model Selector (Left aligned now) */}
-            <div className="relative">
-              <button
-                onClick={() => setShowModelSelector(!showModelSelector)}
-                className="flex items-center gap-2 px-3 py-1.5 rounded-lg hover:bg-[#1c1c1e] transition-all text-sm font-medium text-[#a1a1aa] hover:text-white"
-              >
-                <span className="opacity-70">Grok 2</span>
-                <span className="text-xs text-[#71717a]">beta</span>
-                <ChevronDown className="w-3.5 h-3.5 opacity-50" />
-              </button>
-              {/* ... Model Dropdown logic (keep existing if needed, simplified for brevity) ... */}
-              {showModelSelector && (
-                <div className="absolute top-full left-0 mt-2 w-56 bg-[#18181b] border border-[#27272a] rounded-xl shadow-2xl py-2 z-50 overflow-hidden animate-in fade-in zoom-in-95 duration-200">
-                  {[
-                    { id: "llama-3.1-8b-instant", name: "Grok 2 (Llama)", desc: "Fastest" },
-                    { id: "llama-3.3-70b-versatile", name: "Grok 2 Vision", desc: "Capable" },
-                  ].map((m) => (
-                    <button
-                      key={m.id}
-                      onClick={() => {
-                        setModel(m.id);
-                        setShowModelSelector(false);
-                      }}
-                      className={`w-full text-left px-4 py-3 flex flex-col gap-0.5 transition-all hover:bg-[#27272a] ${model === m.id ? 'bg-[#27272a]/50' : ''}`}
-                    >
-                      <span className={`text-sm font-semibold ${model === m.id ? 'text-[#4361ee]' : 'text-[#fafafa]'}`}>{m.name}</span>
-                      <span className="text-[10px] text-[#71717a]">{m.desc}</span>
-                    </button>
-                  ))}
-                </div>
-              )}
+            {/* Model Selector Removed as per request */}
+            <div className="flex items-center gap-2">
+              <span className="text-sm font-medium text-zinc-400">Aayushi</span>
+              <span className="text-[10px] bg-primary/10 text-primary px-1.5 py-0.5 rounded border border-primary/20">BETA</span>
             </div>
           </div>
 

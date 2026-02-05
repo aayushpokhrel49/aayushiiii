@@ -18,7 +18,7 @@ const CodeBlock = ({ language, children, ...props }: any) => {
     };
 
     return (
-        <div className="rounded-xl overflow-hidden my-5 border border-white/5 bg-black/30 shadow-lg">
+        <div className="rounded-xl overflow-hidden my-5 border border-white/5 bg-black/30 shadow-lg max-w-full w-full">
             <div className="flex items-center justify-between px-4 py-2 bg-white/5 border-b border-white/5">
                 <div className="flex items-center gap-2">
                     <Terminal className="w-3.5 h-3.5 text-zinc-500" />

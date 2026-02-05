@@ -49,7 +49,7 @@ export const InputBar: React.FC<InputBarProps> = ({ onSend, isLoading }) => {
     return (
         <div className="p-4 md:p-6 bg-gradient-to-t from-background via-background/90 to-transparent backdrop-blur-sm fixed bottom-0 left-0 right-0 md:pl-72 z-50">
             <div className="max-w-3xl mx-auto relative">
-                <div className="glass-panel p-2 rounded-[24px] focus-within:ring-1 focus-within:ring-white/20 transition-all duration-300">
+                <div className="relative bg-[#09090b]/80 backdrop-blur-xl border border-[#27272a] rounded-[24px] p-2 flex items-center shadow-2xl transition-all focus-within:border-[#4361ee]/50 focus-within:ring-1 focus-within:ring-[#4361ee]/20 group hover:border-white/10">
                     <textarea
                         ref={textareaRef}
                         rows={1}
